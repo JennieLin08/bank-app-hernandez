@@ -1,15 +1,26 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoginForm from './components/LoginForm'
-import './App.css'
+import SignupForm from './components/signup/SignupForm';
+import LoginForm from './components/LoginForm';
+import Header from './components/header/Header';
+import './App.css';
 // import LoginForm from './components/LoginForm'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentForm, setCurrentForm] = useState('LoginForm');
+  const toggleForm = (formName)=>{
+    setCurrentForm(formName);
+  }
 
   return (
     <>
-      <LoginForm />
+      <Header />
+      {
+        
+        currentForm==="LoginForm" ? <LoginForm onFormSwitch={toggleForm}/> : <SignupForm onFormSwitch={toggleForm}/>
+      }
+
+
     </>
   )
 }
