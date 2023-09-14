@@ -2,35 +2,37 @@ import React, {useState} from 'react'
 import './loginform.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm(props) {
-    const [email, setEmail]=useState('');
+    const { setCurrentPage, setLoggedInUser } = props
+    const [username, setusername]=useState('');
     const [password , setPassword] = useState('');
-
-const [lsemail, setlsEmail] = useState ( () => {
- const savedlsEmail = localStorage.getItem("Email");
-const parsedlsEmail = JSON.parse(savedlsEmail);
-return parsedlsEmail || "";
-});
-
-const [lspassword, setlsPassword] = useState ( () => {
-    const savedlspass = localStorage.getItem("Password");
-   const parsedlspass = JSON.parse(savedlspass);
-   return parsedlspass || "";
-   });
-
+    const navigate = useNavigate();
+ 
+ 
+const accounts = JSON.parse(localStorage.getItem('accounts'))
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        if(email === lsemail && password === lspassword){
-            console.log(lspassword);
-            console.log(lsemail);
-            alert('Welcome to Banko App!');
-        }else{
-            alert('Wrong Email or Password!');
-        }
 
-        
+        const findUser = accounts.find(user => {
+            // console.log(user.username);
+            if(username === user.username){
+                if(password === user.password){
+                    alert('Welcome to Banko App!');
+                    navigate('/dashboard');
+                    setLoggedInUser(user);
+                    return user;
+                }
+                return false;
+            }
+           });
+           
+
+           if(!findUser){
+                alert('Wrong username or Password!');
+           }
     }
   return (
     <>
@@ -38,11 +40,11 @@ const [lspassword, setlsPassword] = useState ( () => {
     <div className="logincontainer">
     <div>
         <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formLoginEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control value={email} onChange={(e)=>setEmail(e.target.value)} type="email" placeholder="Enter email" required/>
+        <Form.Group className="mb-3" controlId="formLoginusername">
+            <Form.Label>Username</Form.Label>
+            <Form.Control value={username} onChange={(e)=>setusername(e.target.value)} type="text" placeholder="Enter username" required/>
             <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
+            We'll never share your data with anyone else.
             </Form.Text>
         </Form.Group>
 

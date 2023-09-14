@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
-import './signupform.css'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import React, { useRef, useState } from 'react';
+import './signupform.css';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { v4 as uuid } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 // import ReactDOM from "react-dom";
 
 
@@ -9,28 +12,55 @@ import Form from 'react-bootstrap/Form'
 function SignupForm(props) {
   const userData = useRef();
   const [ password, setpassword] = useState('');
-  const [ email, setemail] = useState('');
-  const [confirmpass, setconfirmpass] = useState('')
+  const [ username, setusername] = useState('');
+  const [ confirmpass, setconfirmpass] = useState('');
   const [ cnwarning, setcnwarning] = useState(false);
-  // const [userdata, setuserdata] = useState([]);
-
+  const [ fullname, setfullname ] = useState('');
+  const navigate = useNavigate();
+  const accounts = [
+    {
+      id:"2351",
+      fullname:'Jennie Lin',
+      username:'Jennie',
+      password: '123',
+      balance: 10000
+    }
+  ]
+  const [ users, setusers ] = useState(accounts);
+  const [lsusername, setlsusername] = useState ( () => {
+    const savedlsusername = localStorage.getItem("accounts");
+     const parsedlsusername = JSON.parse(savedlsusername);
+     return parsedlsusername || "";
+     });
 
   const handleSubmit = (e)=>{
     e.preventDefault();
-    if(`${confirmpass}` === `${password}`){
-      console.log(`${password} ${confirmpass}`);
-      props.onFormSwitch('LoginForm');
 
+    //  lsusername.find(user => {
+    //   if(username === user.username){
+    //     alert('username already exists!')
+    //     return false;
+    //   }
+    //  });
+
+     if(`${confirmpass}` === `${password}`){
+      accounts.push({
+        id:uuid(),
+        fullname:fullname,
+        username:username,
+        password: password,
+        balance: 10000
+      });
+      console.log(accounts);
+      localStorage.setItem("accounts", JSON.stringify(accounts));
+      
+      props.onFormSwitch('LoginForm');
     }else{
-      alert('Please check your details!');
+      alert('confirm your password!');
     }
 
-}
-
-useEffect(()=>{
-  localStorage.setItem("Email", JSON.stringify(email))
-  localStorage.setItem("Password", JSON.stringify(password))
-},[password]);
+    
+  }
 
 const handleChange = (e)=> {
   if(`${password}` !== e.target.value){
@@ -40,17 +70,31 @@ const handleChange = (e)=> {
   }
   setconfirmpass(e.target.value);
 }
+
+
+  useEffect(()=>{
+    // localStorage.setItem("accounts", JSON.stringify(accounts));
+  },[accounts]);
+
+
   return (
     <>
     <h1> Sign Up </h1>
     <div className="logincontainer">
     <div>
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="email">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email"  placeholder="Enter email" onChange={(e)=> setemail(e.target.value)} required />
+      <Form.Group className="mb-3" controlId="fullname">
+        <Form.Label>Full Name</Form.Label>
+        <Form.Control type="text"  placeholder="Enter Full Name" onChange={(e)=> setfullname(e.target.value)} required />
         <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
+          We'll never share your data with anyone else.
+        </Form.Text>
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="username">
+        <Form.Label>Username</Form.Label>
+        <Form.Control type="text"  placeholder="Enter username" onChange={(e)=> setusername(e.target.value)} required />
+        <Form.Text className="text-muted">
         </Form.Text>
       </Form.Group>
 
