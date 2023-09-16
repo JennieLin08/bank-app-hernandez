@@ -1,9 +1,29 @@
-.dashboard-container{
-    border: 1px black solid;
-    border-radius: 20px;
-}
 
-.dashRow {
-    border: 1px gray solid;
-    border-radius: 10px;
-}
+    .accountbal-container{
+        border: 1px solid rgb(236, 225, 225);
+        display: flex;
+        border-radius: 20px;
+        padding: 20px;
+        justify-content: center;
+        width: 400px;
+        margin: 0 auto;
+        /* text-align: center; */
+    }
+
+    .bankbtn-container{
+        /* border: 1px solid rgb(236, 225, 225); */
+        display: flex;
+        border-radius: 20px;
+        padding: 20px;
+        justify-content: center;
+        width: 400px;
+        margin: 0 auto;
+        /* text-align: center; */
+    }
+
+    .bankbtn-container .btn{
+        /* padding: 5px; */
+        margin: 5px;
+    }
+
+

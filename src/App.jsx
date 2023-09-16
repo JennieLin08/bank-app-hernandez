@@ -20,6 +20,7 @@ function App() {
     setLoggedInUser(user);
   }
 
+  // console.log(loggedInUser);
   
 
   return (

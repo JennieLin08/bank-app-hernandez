@@ -11,18 +11,17 @@ function LoginForm(props) {
     const navigate = useNavigate();
  
  
-const accounts = JSON.parse(localStorage.getItem('accounts'))
+const accounts = JSON.parse(localStorage.getItem('accounts'));
 
     const handleSubmit = (e)=>{
         e.preventDefault();
 
         const findUser = accounts.find(user => {
-            // console.log(user.username);
             if(username === user.username){
                 if(password === user.password){
                     alert('Welcome to Banko App!');
-                    navigate('/dashboard');
                     setLoggedInUser(user);
+                    navigate('/dashboard');
                     return user;
                 }
                 return false;
@@ -60,7 +59,10 @@ const accounts = JSON.parse(localStorage.getItem('accounts'))
         <div>
         <Form.Text className="text-muted">
             No account yet? Click
-            <button onClick={()=>props.onFormSwitch('SignupForm')} className="btn btn-link" >Sign Up</button> 
+            <button onClick={
+                // navigateSignup
+                ()=>props.onFormSwitch('SignupForm')
+        } className="btn btn-link" >Sign Up</button> 
             </Form.Text>
         </div>
         </div>

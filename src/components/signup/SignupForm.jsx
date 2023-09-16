@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { v4 as uuid } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 // import ReactDOM from "react-dom";
 
 
@@ -17,21 +18,28 @@ function SignupForm(props) {
   const [ cnwarning, setcnwarning] = useState(false);
   const [ fullname, setfullname ] = useState('');
   const navigate = useNavigate();
-  const accounts = [
+  const [accounts, setaccounts] = useState([
     {
       id:"2351",
       fullname:'Jennie Lin',
       username:'Jennie',
       password: '123',
-      balance: 10000
+      balance: 1000
     }
-  ]
-  const [ users, setusers ] = useState(accounts);
-  const [lsusername, setlsusername] = useState ( () => {
-    const savedlsusername = localStorage.getItem("accounts");
-     const parsedlsusername = JSON.parse(savedlsusername);
-     return parsedlsusername || "";
-     });
+  ]);
+  const user = {
+    id:uuid(),
+    fullname:fullname,
+    username:username,
+    password: password,
+    balance: 10000
+  }
+
+  // const [lsusername, setlsusername] = useState ( () => {
+  //   const savedlsusername = localStorage.getItem("accounts");
+  //    const parsedlsusername = JSON.parse(savedlsusername);
+  //    return parsedlsusername || "";
+  //    });
 
   const handleSubmit = (e)=>{
     e.preventDefault();
@@ -43,27 +51,20 @@ function SignupForm(props) {
     //   }
     //  });
 
-     if(`${confirmpass}` === `${password}`){
-      accounts.push({
-        id:uuid(),
-        fullname:fullname,
-        username:username,
-        password: password,
-        balance: 10000
-      });
-      console.log(accounts);
-      localStorage.setItem("accounts", JSON.stringify(accounts));
+     if(confirmpass === password){
+        setaccounts(oldArr => [...oldArr,user]);
+        localStorage.setItem("accounts", JSON.stringify(accounts));
+
+          // navigate('/login');
       
-      props.onFormSwitch('LoginForm');
     }else{
       alert('confirm your password!');
     }
 
-    
   }
 
 const handleChange = (e)=> {
-  if(`${password}` !== e.target.value){
+  if(password !== e.target.value){
     setcnwarning(true);
   }else{
     setcnwarning(false);
@@ -73,8 +74,12 @@ const handleChange = (e)=> {
 
 
   useEffect(()=>{
-    // localStorage.setItem("accounts", JSON.stringify(accounts));
-  },[accounts]);
+    if(!localStorage.getItem("accounts")){
+      localStorage.setItem("accounts", JSON.stringify(accounts));
+    }
+    // console.log(accounts);
+   
+  },[]);
 
 
   return (
