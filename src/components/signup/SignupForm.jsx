@@ -18,22 +18,9 @@ function SignupForm(props) {
   const [ cnwarning, setcnwarning] = useState(false);
   const [ fullname, setfullname ] = useState('');
   const navigate = useNavigate();
-  const [accounts, setaccounts] = useState([
-    {
-      id:"2351",
-      fullname:'Jennie Lin',
-      username:'Jennie',
-      password: '123',
-      balance: 1000
-    }
-  ]);
-  const user = {
-    id:uuid(),
-    fullname:fullname,
-    username:username,
-    password: password,
-    balance: 10000
-  }
+  const [accounts, setaccounts] = useState([]);
+  let user = {};
+ 
 
   // const [lsusername, setlsusername] = useState ( () => {
   //   const savedlsusername = localStorage.getItem("accounts");
@@ -51,14 +38,49 @@ function SignupForm(props) {
     //   }
     //  });
 
-     if(confirmpass === password){
-        setaccounts(oldArr => [...oldArr,user]);
-        localStorage.setItem("accounts", JSON.stringify(accounts));
 
-          // navigate('/login');
-      
+
+    if(!localStorage.getItem("accounts")){
+      user = {
+        id:uuid(),
+        Accntno: 1,
+        fullname:fullname,
+        username:username,
+        password: password,
+        balance: 0.00
+      }
     }else{
-      alert('confirm your password!');
+      const getaccntno = localStorage.getItem("accounts");
+      const parsedgetaccntno = JSON.parse(getaccntno);
+      const date = new Date();
+      const dateToNo = date.getTime();
+      const accntno = dateToNo + '-' + parsedgetaccntno.length;
+      console.log(accntno[parsedgetaccntno.length]);
+  
+      user = {
+        id:uuid(),
+        Accntno: accntno,
+        fullname:fullname,
+        username:username,
+        password: password,
+        balance: 0.00
+      }
+
+      for(let i=0; i < parsedgetaccntno.length; i++ ){
+        if(parsedgetaccntno[i].username === username){
+          // return ;
+          return alert('User Already Exist!');
+        }
+      }
+
+        if(confirmpass === password){
+          // setaccounts(oldArr => [...oldArr,user]);
+          accounts.push(user);
+          localStorage.setItem("accounts", JSON.stringify(accounts));
+              navigate('/login');
+        }else{
+          alert('confirm your password!');
+        }
     }
 
   }
@@ -74,14 +96,22 @@ const handleChange = (e)=> {
 
 
   useEffect(()=>{
-    if(!localStorage.getItem("accounts")){
+    if(localStorage.getItem("accounts")){
+      const checkAccounts = localStorage.getItem("accounts")
+      const parsedcheckAccounts = JSON.parse(checkAccounts);
+      setaccounts(parsedcheckAccounts);
+    }else{
       localStorage.setItem("accounts", JSON.stringify(accounts));
     }
+    
     // console.log(accounts);
    
   },[]);
 
-
+  const navigateLogin = (e)=>{
+    e.preventDefault();
+    navigate('/login')
+  }
   return (
     <>
     <h1> Sign Up </h1>
@@ -119,7 +149,10 @@ const handleChange = (e)=> {
       <div>
       <Form.Text className="text-muted">
           Already have account? Login
-          <button onClick={()=>props.onFormSwitch('LoginForm')} className="btn btn-link" >Here</button> 
+          <button onClick={
+            navigateLogin
+            // ()=>props.onFormSwitch('LoginForm')
+          } className="btn btn-link" >Here</button> 
           </Form.Text>
       </div>
     </div>

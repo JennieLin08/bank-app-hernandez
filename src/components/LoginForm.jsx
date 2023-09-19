@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { useEffect } from 'react';
 import './loginform.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -10,28 +11,42 @@ function LoginForm(props) {
     const [password , setPassword] = useState('');
     const navigate = useNavigate();
  
- 
 const accounts = JSON.parse(localStorage.getItem('accounts'));
+let logoutuser = {}
+localStorage.setItem("LoginUser", JSON.stringify(logoutuser))
+
+
+// useEffect(()=>{
+  
+   
+//   },[]);
 
     const handleSubmit = (e)=>{
         e.preventDefault();
 
         const findUser = accounts.find(user => {
-            if(username === user.username){
-                if(password === user.password){
-                    alert('Welcome to Banko App!');
-                    setLoggedInUser(user);
-                    navigate('/dashboard');
-                    return user;
+                if(username === user.username ){
+                    if(password === user.password){
+                        alert('Welcome to Banko App!'); 
+                        navigate('/dashboard');
+                        setLoggedInUser(user);
+                        localStorage.setItem("LoginUser", JSON.stringify(user))
+                        // console.log(user);
+                        return user;
+                    }
+                    return false;
                 }
-                return false;
-            }
            });
            
 
            if(!findUser){
                 alert('Wrong username or Password!');
            }
+    }
+
+    const navigateSignup = (e)=>{
+        e.preventDefault();
+        navigate('/SignUp');
     }
   return (
     <>
@@ -60,8 +75,8 @@ const accounts = JSON.parse(localStorage.getItem('accounts'));
         <Form.Text className="text-muted">
             No account yet? Click
             <button onClick={
-                // navigateSignup
-                ()=>props.onFormSwitch('SignupForm')
+                navigateSignup
+                // ()=>props.onFormSwitch('SignupForm')
         } className="btn btn-link" >Sign Up</button> 
             </Form.Text>
         </div>
