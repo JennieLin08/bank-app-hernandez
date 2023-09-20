@@ -8,24 +8,24 @@ import { useNavigate } from 'react-router-dom';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 const Header = () => {
-  const [online,setonline] = useState(false);
+  // const [online,setonline] = useState(false);
   // const onlineuser = JSON.parse(localStorage.getItem('LoginUser'));
-  // let online = false;
+  let online = false;
   // console.log(onlineuser);
   // if(onlineuser.id){
   //   online = true;
   // }
   const onlineuser = JSON.parse(localStorage.getItem('LoginUser'));
-
-    // if(onlineuser.id){
-    //   setonline(true);
-    // }
+  if(onlineuser){
+    if(onlineuser.id){
+      online = true;
+    }
+    
+  }
 
   
   useEffect(()=>{
-    if(onlineuser.id){
-      setonline(true);
-    }
+    
     
      
     },[]);
@@ -36,9 +36,11 @@ const Header = () => {
   //   localStorage.setItem('LoginUser',  JSON.stringify(userLogout));
   // }
   return (
-    <Navbar expand="lg"  className="bg-body-tertiary ">
+    <Navbar expand="lg"  className="bg-body-tertiary nav">
       <Container>
-        <Navbar.Brand href="#home" >BANKO APP</Navbar.Brand>
+        <Navbar.Brand href="#home" ><span className='brand'>BANKO <span className="appStyle">APP</span> </span>
+        <div className='small'>'It’s your money.'</div>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
           <Nav className=" d-flex justify-content-end">

@@ -1,7 +1,37 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Croissant+One&family=Gruppo&family=Quicksand:wght@600&family=Red+Hat+Display:wght@600&family=Rubik+Microbe&family=Titan+One&display=swap');
+
+/* font-family: 'Croissant One', cursive;
+font-family: 'Gruppo', sans-serif;
+font-family: 'Quicksand', sans-serif;
+font-family: 'Red Hat Display', sans-serif;
+font-family: 'Rubik Microbe', cursive;
+font-family: 'Titan One', cursive; */
+
+
 Navbar{
     overflow: hidden;
     background-color: #333;
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     width: 100%;
+    /* font-family: 'Titan One', cursive; */
+
+}
+
+.brand{
+    font-weight: bold;
+    color: rgb(20, 77, 104);
+    font-family: 'Gruppo', sans-serif;
+}
+.appStyle{
+    color: rgb(8, 8, 8);
+}
+
+.small{
+    font-size: small;
+    font-style: italic;
+    color: rgb(20, 77, 104);
+    font-family: 'Croissant One', cursive;
 }

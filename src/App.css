@@ -1,9 +1,14 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Croissant+One&family=Quicksand:wght@600&family=Red+Hat+Display:wght@600&family=Rubik+Microbe&display=swap');
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   /* padding: 2rem; */
   text-align: center;
   /* background-image: linear-gradient(pink); */
+  /* font-family: 'Croissant One', cursive; */
+  font-family: 'Quicksand', sans-serif;
   
 }
 

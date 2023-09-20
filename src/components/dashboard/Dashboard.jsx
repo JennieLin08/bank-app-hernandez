@@ -27,6 +27,7 @@ const [accntBal, setAccntBal] = useState(bal =>{
 });
 
 const loginUser = JSON.parse(localStorage.getItem('LoginUser'));
+
 if(!loginUser){
   Navigate('/login');
 }
@@ -56,7 +57,7 @@ if(!loginUser){
     const handleWidthdraw = (e)=>{
       e.preventDefault();
 
-      if(widthdrawAmnt > loginUser.balance && widthdrawAmnt > 0){
+      if(inputAmount > accntBal && inputAmount > 0){
         alert("Not enough Balance!")
       }else{
 
@@ -68,7 +69,8 @@ if(!loginUser){
           setAccntBal(userAccnt[i].balance);
         }
       }
-      const updtaeAccnts = localStorage.setItem('accounts', JSON.stringify(userAccnt));
+      localStorage.setItem('accounts', JSON.stringify(userAccnt));
+     
         if(localStorage.getItem("bankTransactions")){
           const getTrans = JSON.parse(localStorage.getItem("bankTransactions"));
           const trID = getTrans.length + 1;
@@ -198,21 +200,26 @@ if(!loginUser){
       let SMaccntExists = false;
       for(let i=0;i<getAccnt.length;i++){
         if(SMAccntno === getAccnt[i].Accntno && accntName === getAccnt[i].fullname){
-          // console.log('test');
-          getAccnt[i].balance = getAccnt[i].balance + parseInt(inputAmount);
+          const amnt = getAccnt[i].balance + parseInt(inputAmount);
+          console.log(amnt);
+          getAccnt[i].balance += parseInt(inputAmount);
+          
           SMaccntExists = true;
-          localStorage.setItem('accounts', JSON.stringify(getAccnt))
+          
         }
       }
+      localStorage.setItem('accounts', JSON.stringify(getAccnt))
       if(SMaccntExists){
         for(let x=0;x<getAccnt.length;x++){
-          if(getAccnt[x].Accntno === currentUser.accntno){
+          if(getAccnt[x].Accntno === currentUser.Accntno){
+            console.log('test');
             getAccnt[x].balance = getAccnt[x].balance - parseInt(inputAmount);
             setAccntBal(getAccnt[x].balance);
-            localStorage.setItem('accounts', JSON.stringify(getAccnt));
+            
           }
         }
       }
+      localStorage.setItem('accounts', JSON.stringify(getAccnt));
       // const updateAccnts = localStorage.setItem('accounts', JSON.stringify(getReceiverAccnt));
 
 
@@ -266,20 +273,21 @@ if(!loginUser){
       tblerows=<tbody>
       {
         bankTrans.map((x,i)=>{
-
-          return (
-            <tr>
-            <td >{x.transNo}</td>
-            <td >{x.date}</td>
-            <td >{x.accountNo}</td>
-            <td >{x.BankAmnt}</td>
-            <td >{x.amount}</td>
-            <td >{x.action}</td>
-            <td >{x.sendToAccntName}</td>
-            <td >{x.currentBalance}</td>
-            <td >{x.Remarks}</td>
-            </tr>
-          );
+          if(x.accountNo === loginUser.Accntno || x.sendToaccntNo === loginUser.Accntno ){
+            return (
+              <tr key={i}>
+                <td >{x.transNo}</td>
+                <td >{x.date}</td>
+                <td >{x.accountNo}</td>
+                <td >{x.BankAmnt}</td>
+                <td >{x.amount}</td>
+                <td >{x.action}</td>
+                <td >{x.sendToAccntName}</td>
+                <td >{x.currentBalance}</td>
+                <td >{x.Remarks}</td>
+              </tr>
+            );
+          }
         })
       }
       </tbody>
@@ -299,26 +307,27 @@ if(!loginUser){
       </div>
 
       <div className='row'>
-      
         </div>
-
     </div>
 
     <div className="bankbtn-container">
       <button className='btn btn-dark' onClick={handleShowDeposit}>Deposit</button>
       <button className='btn btn-dark'onClick={handleShowSendMoney}>Send Money</button>
-      <Button variant="dark" onClick={handleShowWidthdraw}>
-    Widthdraw
-  </Button>
+      <Button variant="dark" onClick={handleShowWidthdraw}>  Withdraw</Button>
     </div>
 
     <Modal show={showwidth} onHide={handleCloseWidthdraw}>
       <Modal.Header closeButton>
-        <Modal.Title>Widthdraw</Modal.Title>
+        <Modal.Title>Withdraw</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <input type="number" onChange={(e)=> setInputAmnt(e.target.value)} placeholder='Enter Amount' required/>
-      <input type="text" onChange={(e)=> setRemarks(e.target.value)} placeholder='Remarks' />
+      <label>Account No :</label><input type="text" placeholder='' value={loginUser.Accntno ? loginUser.Accntno: '' } disabled/>
+      </Modal.Body>
+      <Modal.Body>
+      <label>Amount :</label><input type="number" onChange={(e)=> setInputAmnt(e.target.value)} placeholder='Enter Amount' required/>
+      </Modal.Body>
+      <Modal.Body>
+      <label>Remarks :</label><input type="text" onChange={(e)=> setRemarks(e.target.value)} placeholder='Remarks' />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseWidthdraw}>
@@ -334,6 +343,9 @@ if(!loginUser){
       <Modal.Header closeButton>
         <Modal.Title>Deposit</Modal.Title>
       </Modal.Header>
+      <Modal.Body>
+      <label>Account No :</label><input type="text" placeholder='' value={loginUser.Accntno ? loginUser.Accntno: '' } disabled/>
+      </Modal.Body>
 
       <Modal.Body>
       <label>Enter Amount: </label><input type="number" onChange={(e)=> setInputAmnt(e.target.value)} required/>
@@ -375,7 +387,7 @@ if(!loginUser){
 
       <Modal.Body>
       <label> Remarks   :</label>
-      <input type="number" onChange={(e)=> setRemarks(e.target.value)} />
+      <input type="text" onChange={(e)=> setRemarks(e.target.value)} />
       </Modal.Body>
 
       <Modal.Footer>
@@ -391,7 +403,7 @@ if(!loginUser){
 
 
 
-  <h3>Account History</h3>
+  <h3>Transaction History</h3>
 
   <Table striped bordered hover size="sm">
     <thead>
