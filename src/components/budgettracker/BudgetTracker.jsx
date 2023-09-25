@@ -10,6 +10,14 @@ const BudgetTracker = () => {
   const [qty, setqty] = useState(1);
   const [inputDesc, setDesc] = useState('');
   const [expenseTrans, setExpensetrans] = useState([]);
+
+      const [editProduct, setEditProduct] = useState('');
+      const [editPrice, setEditPrice] = useState(0);
+      const [editQty, setEditQty] = useState(0);
+      const [editTotal, setEditTotal] = useState(0);
+      const [editAccountno , setEditAccntno] = useState("");
+      const [editBankAmnt , setEditBankAmnt] = useState(0);
+      const [editTransNo , setEditTransNo] = useState(0);
   
 
     useEffect(()=>{
@@ -20,7 +28,8 @@ const BudgetTracker = () => {
           setExpensetrans(getExpenseTrans);
         }
         setTotal(price*qty);
-      },[price,qty]);
+        setEditTotal(editPrice*editQty);
+      },[price,qty,editPrice,editQty]);
 
   const [accntBal, setAccntBal] = useState(bal =>{
     let userAccnt = JSON.parse(localStorage.getItem('accounts'));
@@ -52,9 +61,6 @@ const BudgetTracker = () => {
       const onChangePrice = (e)=> {
         e.preventDefault();
         setPrice(e.target.value);          
-      }
-      function getTotal(){
-
       }
 
       const handleAddExpense = (e)=>{
@@ -101,13 +107,71 @@ const BudgetTracker = () => {
         setExpensetrans(getExpenseTrans);
       }
 
+      //edit expense
+      const handleCloseEditExpense = () => setshowEditExpense(false);
+      const handleShowEditExpense = () => {
+        setshowEditExpense(true);
+        setTotal(0);
+      };
+      const [showEditExpense, setshowEditExpense] = useState(false);
+
+      //edit expense code
+
       const handleEditExpense = (e)=>{
         e.preventDefault();
-        console.log(e.target.id);
+        const xpenseTrans = JSON.parse(localStorage.getItem("expenseTrans"));
+         for(let i=0;i<xpenseTrans.length ;i++){
+          if(parseInt(xpenseTrans[i].transNo) === parseInt(e.target.id)){
+            setEditProduct(xpenseTrans[i].Description);
+            setEditPrice(xpenseTrans[i].amount);
+            setEditQty(xpenseTrans[i].qty);
+            setEditAccntno(xpenseTrans[i].Accntno);
+            setEditBankAmnt(xpenseTrans[i].BankAmnt);
+            setEditTransNo(xpenseTrans[i].transNo);
+          }
+        }
+        setshowEditExpense(true);
+      }
+      const onChangeEditPrice = (e)=> {
+        e.preventDefault();
+        setEditPrice(e.target.value);          
       }
 
-      let tblerows = null;
+      // const [editProduct, setEditProduct] = useState('');
+      // const [editPrice, setEditPrice] = useState(0);
+      // const [editQty, setEditQty] = useState(0);
+      // const [editTotal, setEditTotal] = useState(0);
+      // const [editAccountno , setEditAccntno] = useState("");
+      // const [editBankAmnt , setEditBankAmnt] = useState(0);
+      // const [editTransNo , setEditTransNo] = useState(0);
 
+      const handleAddEditExpense = (e)=>{
+        e.preventDefault();
+        const getXpenseTrans = JSON.parse(localStorage.getItem("expenseTrans"));
+        const dateNow = new Date().toLocaleString();
+        for(let i =0;i<getXpenseTrans.length;i++){
+          if(getXpenseTrans[i].transNo === editTransNo){
+            getXpenseTrans[i].transNo = editTransNo;
+            getXpenseTrans[i].BankAmnt = editBankAmnt;
+            getXpenseTrans[i].Description = editProduct;
+            getXpenseTrans[i].amount = editPrice;
+            getXpenseTrans[i].currentBalance= editBankAmnt - editPrice;
+            getXpenseTrans[i].date = dateNow;
+            getXpenseTrans[i].qty = parseInt(editQty);
+            getXpenseTrans[i].total = editTotal;
+          }
+        }
+        localStorage.setItem('expenseTrans', JSON.stringify(getXpenseTrans));
+        setshowEditExpense(false);
+      }
+
+      const handleApprovedExpense = (e) => {
+        e.preventDefault();
+        alert('approved!');
+      }
+
+
+    let tblerows = null;
     if(expenseTrans){
       tblerows=<tbody>
       {
@@ -124,9 +188,8 @@ const BudgetTracker = () => {
                 <td >
                   <button className='btn btn-warning ' onClick={handleDelExpense} id={x.transNo}>Del</button>
                   <button className='btn btn-primary m-2' onClick={handleEditExpense} id={x.transNo}>Edit</button>
-                  <button className='btn btn-primary ' id={x.transNo}>Approved</button>
+                  <button className='btn btn-primary ' id={x.transNo} onClick={handleApprovedExpense}>Approved</button>
                 </td>
-
               </tr>
             );
           }
@@ -152,39 +215,6 @@ const BudgetTracker = () => {
       <button className='btn btn-dark' onClick={handleShowExpense}>Add Expense</button>
     </div>
 
-    <Modal show={showExpense} onHide={handleCloseExpense}>
-      <Modal.Header closeButton>
-        <Modal.Title>Add Expense</Modal.Title>
-      </Modal.Header>{
-      // <Modal.Body>
-      // <label>Account No :</label><input type="text" placeholder='' value={loginUser.Accntno ? loginUser.Accntno: '' } disabled/>
-      // </Modal.Body>
-      }
-      <Modal.Body>
-      <label>Product/Description :</label><input type="text" onChange={(e)=> setDesc(e.target.value)} placeholder='Description' required/>
-      </Modal.Body>
-      <Modal.Body>
-      <label>Price :</label><input type="number" onChange={onChangePrice} placeholder='Enter Amount' required/>
-      </Modal.Body>
-      <Modal.Body>
-      <label>Quantity :</label><input type="number" value={qty} onChange={(e)=> setqty(e.target.value)} placeholder='Enter Amount' required/>
-      </Modal.Body>
-
-      <Modal.Body>
-      <label>Total :</label><h5>₱  {total}</h5>
-      </Modal.Body>
-      
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleCloseExpense}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={handleAddExpense}>
-          Add
-        </Button>
-      </Modal.Footer>
-    </Modal>
-
-
     <h3>Expense Record</h3>
 
     <Table striped bordered hover size="sm">
@@ -201,6 +231,66 @@ const BudgetTracker = () => {
       </thead>
         {tblerows}
     </Table>
+
+
+
+//modals
+    <Modal show={showExpense} onHide={handleCloseExpense}>
+    <Modal.Header closeButton>
+      <Modal.Title>Add Expense</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <label>Product/Description :</label><input type="text" onChange={(e)=> setDesc(e.target.value)} placeholder='Description' required/>
+    </Modal.Body>
+    <Modal.Body>
+      <label>Price :</label><input type="number" onChange={onChangePrice} placeholder='Enter Amount' required/>
+    </Modal.Body>
+    <Modal.Body>
+      <label>Quantity :</label><input type="number" value={qty} onChange={(e)=> setqty(e.target.value)} placeholder='Enter Amount' required/>
+    </Modal.Body>
+
+    <Modal.Body>
+      <label>Total :</label><h5>₱  {total}</h5>
+    </Modal.Body>
+    
+    <Modal.Footer>
+      <Button variant="secondary" onClick={handleCloseExpense}>
+        Close
+      </Button>
+      <Button variant="primary" onClick={handleAddExpense}>
+        Add
+      </Button>
+    </Modal.Footer>
+  </Modal>
+
+
+  <Modal show={showEditExpense} onHide={handleCloseEditExpense}>
+    <Modal.Header closeButton>
+      <Modal.Title>Add Expense</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <label>Product/Description :</label><input type="text" value={editProduct} onChange={(e)=> setEditProduct(e.target.value)} placeholder='Description' required/>
+    </Modal.Body>
+    <Modal.Body>
+      <label>Price :</label><input type="number"  value={editPrice} onChange={onChangeEditPrice} placeholder='Enter Amount' required/>
+    </Modal.Body>
+    <Modal.Body>
+      <label>Quantity :</label><input type="number" value={editQty} onChange={(e)=> setEditQty(e.target.value)} placeholder='Enter Amount' required/>
+    </Modal.Body>
+
+    <Modal.Body>
+      <label>Total :</label><h5>₱  {editTotal}</h5>
+    </Modal.Body>
+    
+    <Modal.Footer>
+      <Button variant="secondary" onClick={handleCloseEditExpense}>
+        Close
+      </Button>
+      <Button variant="primary" onClick={handleAddEditExpense}>
+        Add
+      </Button>
+    </Modal.Footer>
+  </Modal>
 
     </>
   )

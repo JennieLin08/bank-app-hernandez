@@ -201,9 +201,7 @@ if(!loginUser){
       for(let i=0;i<getAccnt.length;i++){
         if(SMAccntno === getAccnt[i].Accntno && accntName === getAccnt[i].fullname){
           const amnt = getAccnt[i].balance + parseInt(inputAmount);
-          console.log(amnt);
           getAccnt[i].balance += parseInt(inputAmount);
-          
           SMaccntExists = true;
           
         }

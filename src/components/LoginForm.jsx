@@ -7,23 +7,20 @@ import { useNavigate } from 'react-router-dom';
 
 function LoginForm(props) {
     const { setCurrentPage, setLoggedInUser } = props
-    const [username, setusername]=useState('');
+    const [username, setusername]= useState('');
     const [password , setPassword] = useState('');
     const navigate = useNavigate();
  
 const accounts = JSON.parse(localStorage.getItem('accounts'));
+
+useEffect(()=>{
 let logoutuser = {}
-localStorage.setItem("LoginUser", JSON.stringify(logoutuser))
+localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
 
-
-// useEffect(()=>{
-  
-   
-//   },[]);
+  },[]);
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-
         const findUser = accounts.find(user => {
                 if(username === user.username ){
                     if(password === user.password){
