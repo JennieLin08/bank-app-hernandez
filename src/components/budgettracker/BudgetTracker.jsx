@@ -10,6 +10,8 @@ const BudgetTracker = () => {
   const [qty, setqty] = useState(1);
   const [inputDesc, setDesc] = useState('');
   const [expenseTrans, setExpensetrans] = useState([]);
+  // const [totalExpense, setTotalExpense] = useState(0);
+
 
       const [editProduct, setEditProduct] = useState('');
       const [editPrice, setEditPrice] = useState(0);
@@ -26,6 +28,11 @@ const BudgetTracker = () => {
         }else{
           const getExpenseTrans = JSON.parse(localStorage.getItem("expenseTrans"));
           setExpensetrans(getExpenseTrans);
+          // let getTotal = 0;
+          // for(let i=0;i<getExpenseTrans.length;i++){
+          //   getTotal += getExpenseTrans[i].amount;
+          // }
+          // setAccntBal(accntBal-getTotal);
         }
         setTotal(price*qty);
         setEditTotal(editPrice*editQty);
@@ -67,6 +74,8 @@ const BudgetTracker = () => {
         e.preventDefault();
         // console.log(parseInt(inputAmnt));
         if(price > accntBal && price > 0){
+          console.log(price);
+          console.log(accntBal);
           alert("Check your Balance!");
         }else{
           const getExpTrans = localStorage.getItem("expenseTrans");
@@ -137,13 +146,6 @@ const BudgetTracker = () => {
         setEditPrice(e.target.value);          
       }
 
-      // const [editProduct, setEditProduct] = useState('');
-      // const [editPrice, setEditPrice] = useState(0);
-      // const [editQty, setEditQty] = useState(0);
-      // const [editTotal, setEditTotal] = useState(0);
-      // const [editAccountno , setEditAccntno] = useState("");
-      // const [editBankAmnt , setEditBankAmnt] = useState(0);
-      // const [editTransNo , setEditTransNo] = useState(0);
 
       const handleAddEditExpense = (e)=>{
         e.preventDefault();
@@ -186,9 +188,9 @@ const BudgetTracker = () => {
                 <td >{x.qty}</td>
                 <td >{x.total}</td>
                 <td >
-                  <button className='btn btn-warning ' onClick={handleDelExpense} id={x.transNo}>Del</button>
+                  <button className='btn btn-danger ' onClick={handleDelExpense} id={x.transNo}>Del</button>
                   <button className='btn btn-primary m-2' onClick={handleEditExpense} id={x.transNo}>Edit</button>
-                  <button className='btn btn-primary ' id={x.transNo} onClick={handleApprovedExpense}>Approved</button>
+                  <button className='btn btn-warning ' id={x.transNo} onClick={handleApprovedExpense}>Approved</button>
                 </td>
               </tr>
             );
@@ -217,9 +219,9 @@ const BudgetTracker = () => {
 
     <h3>Expense Record</h3>
 
-    <Table striped bordered hover size="sm">
-      <thead>
-        <tr>
+    <Table striped bordered hover size="sm" className='tblbt'>
+      <thead >
+        <tr >
           <th>TransNo</th>
           <th>Date</th>
           <th>Product/Desc</th>
@@ -232,9 +234,6 @@ const BudgetTracker = () => {
         {tblerows}
     </Table>
 
-
-
-//modals
     <Modal show={showExpense} onHide={handleCloseExpense}>
     <Modal.Header closeButton>
       <Modal.Title>Add Expense</Modal.Title>

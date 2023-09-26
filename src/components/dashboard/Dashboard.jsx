@@ -4,6 +4,9 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 const Dashboard = (props) => {
@@ -198,11 +201,14 @@ if(!loginUser){
       let getAccnt = JSON.parse(localStorage.getItem('accounts'));
       let currentUser = JSON.parse(localStorage.getItem('LoginUser'));
       let SMaccntExists = false;
+      let SMAReceiverBal = 0;
       for(let i=0;i<getAccnt.length;i++){
         if(SMAccntno === getAccnt[i].Accntno && accntName === getAccnt[i].fullname){
           const amnt = getAccnt[i].balance + parseInt(inputAmount);
           getAccnt[i].balance += parseInt(inputAmount);
           SMaccntExists = true;
+          SMAReceiverBal = getAccnt[i].balance - parseInt(inputAmount);
+          console.log(SMAReceiverBal);
           
         }
       }
@@ -213,7 +219,6 @@ if(!loginUser){
             console.log('test');
             getAccnt[x].balance = getAccnt[x].balance - parseInt(inputAmount);
             setAccntBal(getAccnt[x].balance);
-            
           }
         }
       }
@@ -230,22 +235,41 @@ if(!loginUser){
           amount:parseInt(inputAmount),
           action:"Transfer/Send",
           accountNo:currentUser.Accntno,
+          fromAccnt:currentUser.Accntno,
           username:currentUser.username,
           Description:desc,
           sendToaccntNo:SMAccntno,
           sendToAccntName:accntName,
           date: dateNow,
           Remarks: remarks,
-          currentBalance: accntBal - parseInt(inputAmount)
+          currentBalance: accntBal - parseInt(inputAmount) 
+        }
+
+        const saveTransactionReceiver = {
+          transNo : trID + 1,
+          BankAmnt:SMAReceiverBal,
+          amount:parseInt(inputAmount),
+          action:"Transfer/Send",
+          accountNo:SMAccntno,
+          fromAccnt:currentUser.Accntno,
+          username:currentUser.username,
+          Description:desc,
+          sendToaccntNo:SMAccntno,
+          sendToAccntName:accntName,
+          date: dateNow,
+          Remarks: remarks,
+          currentBalance: SMAReceiverBal + parseInt(inputAmount)
+          // console.log();
         }
         // setbanktrans(oldbankArr => [...oldbankArr,saveTransaction]);
         bankTrans.push(saveTransaction);
+        bankTrans.push(saveTransactionReceiver);
         localStorage.setItem("bankTransactions", JSON.stringify(bankTrans));
       }else{
         const trID = 1;
         const saveTransaction = {
           transNo : trID,
-          BankAmnt:accntBal,
+          BankAmnt:accntBal ,
           amount:parseInt(inputAmount),
           action:"Transfer/Send",
           accountNo:currentUser.Accntno,
@@ -255,9 +279,25 @@ if(!loginUser){
           sendToAccntName:accntName,
           date: dateNow,
           Remarks: remarks,
-          currentBalance: parseInt(inputAmount) + accntBal
+          currentBalance: accntBal - parseInt(inputAmount)
+        }
+
+        const saveTransactionReceiver = {
+          transNo : trID +1,
+          BankAmnt:SMAReceiverBal - parseInt(inputAmount),
+          amount:parseInt(inputAmount),
+          action:"Transfer/Send",
+          accountNo:currentUser.Accntno,
+          username:currentUser.username,
+          Description:desc,
+          sendToaccntNo:SMAccntno,
+          sendToAccntName:accntName,
+          date: dateNow,
+          Remarks: remarks,
+          currentBalance: SMAReceiverBal + parseInt(inputAmount)
         }
         bankTrans.push(saveTransaction);
+        bankTrans.push(saveTransactionReceiver);
         localStorage.setItem("bankTransactions", JSON.stringify(bankTrans));
       }
 
@@ -271,12 +311,12 @@ if(!loginUser){
       tblerows=<tbody>
       {
         bankTrans.map((x,i)=>{
-          if(x.accountNo === loginUser.Accntno || x.sendToaccntNo === loginUser.Accntno ){
+          if(x.accountNo === loginUser.Accntno ){
             return (
               <tr key={i}>
                 <td >{x.transNo}</td>
                 <td >{x.date}</td>
-                <td >{x.accountNo}</td>
+                <td >{x.fromAccnt}</td>
                 <td >{x.BankAmnt}</td>
                 <td >{x.amount}</td>
                 <td >{x.action}</td>
@@ -297,10 +337,14 @@ if(!loginUser){
     <h4> Welcome to Dashboard  {loginUser.username.toUpperCase() }  </h4>
     <div className="accountbal-container">
       <div className='row'>
-      <h4> Account Balance  </h4>
+      <h4> Available Balance  </h4>
+      
       <h5>₱ {accntBal.toLocaleString(undefined, {maximumFractionDigits:2})}</h5>
         <div>
-          <small>Account No:  {loginUser.Accntno}</small>
+          <small>Savings Account No:  {loginUser.Accntno}</small>
+        </div>
+        <div>
+          <small> BANKO APP - Savings  </small>
         </div>
       </div>
 
@@ -403,7 +447,13 @@ if(!loginUser){
 
   <h3>Transaction History</h3>
 
-  <Table striped bordered hover size="sm">
+  <Container>
+  <Row>
+    <Col></Col>
+    <Col>
+    
+
+    <Table striped bordered hover size="sm">
     <thead>
       <tr>
         <th>TransNo</th>
@@ -419,6 +469,17 @@ if(!loginUser){
     </thead>
       {tblerows}
   </Table>
+    
+    
+    
+    
+    </Col>
+    <Col></Col>
+  </Row>
+</Container>
+  
+
+ 
 
     </>
 

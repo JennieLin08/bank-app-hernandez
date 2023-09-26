@@ -1,3 +1,13 @@
 .btn{
     
 }
+th{
+    background-color: #7ec3af !important;
+    border-color: black;
+}
+
+tr,td{
+    /* border-bottom: 1px solid #ddd !important; */
+    background-color: #7ec3af !important;
+    border-color: black;
+}

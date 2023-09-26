@@ -9,8 +9,16 @@
   /* background-image: linear-gradient(pink); */
   /* font-family: 'Croissant One', cursive; */
   font-family: 'Quicksand', sans-serif;
+  background-color: #7ec3af;
+  margin-bottom: 5px !important;
+
   
 }
+body{
+  /* background-color: #7ec3af; */
+  background-color: #039b9e !important;
+}
+
 
 /* 
 

@@ -9,6 +9,11 @@ font-family: 'Red Hat Display', sans-serif;
 font-family: 'Rubik Microbe', cursive;
 font-family: 'Titan One', cursive; */
 
+.navbar{
+    /* background-color: #039b9e !important; */
+    background-color: #7ec3af !important;
+}
+
 
 Navbar{
     overflow: hidden;

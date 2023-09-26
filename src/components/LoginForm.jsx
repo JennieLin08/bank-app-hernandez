@@ -79,6 +79,9 @@ localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
         </div>
         </div>
     </div>
+    <div className='bot'>
+        <h1>  </h1>
+    </div>
     </>
   );
 }
