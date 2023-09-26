@@ -1,13 +1,16 @@
-.btn{
-    
-}
+
 th{
     background-color: #7ec3af !important;
     border-color: black;
+    
+}
+table{
+    border-radius: 5px;
 }
 
 tr,td{
     /* border-bottom: 1px solid #ddd !important; */
     background-color: #7ec3af !important;
     border-color: black;
+  
 }
