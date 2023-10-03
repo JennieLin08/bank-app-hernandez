@@ -1,6 +1,7 @@
 
     .accountbal-container{
-        border: 1px solid rgb(236, 225, 225);
+        /* border: 1px solid rgb(236, 225, 225); */
+        border: 2px #2c4d68  solid;
         display: flex;
         border-radius: 20px;
         padding: 20px;
@@ -18,12 +19,34 @@
         justify-content: center;
         width: 400px;
         margin: 0 auto;
+        
         /* text-align: center; */
+    }
+    .iconSize{
+        width: 100x;
     }
 
     .bankbtn-container .btn{
         /* padding: 5px; */
         margin: 5px;
+        background-color: #2c4d68 ;
     }
+
+    h4{
+        margin: 10px;
+    }
+    .tableContainer{
+        border-radius: 20px;
+    height: 400px;
+    padding: 0 10px 10px 10px;
+    overflow: scroll;
+    }
+    /* th{
+        position: sticky !important;
+        top: 0px !important;
+        margin: 0 0 0 0;
+    } */
+
+    
 
 

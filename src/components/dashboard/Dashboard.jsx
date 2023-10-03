@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import './dashboard.css';
 import { Navigate, useNavigate } from 'react-router-dom'
+// import { ReactTableScroll } from 'react-table-scroll';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoneyBillTrendUp } from "@fortawesome/free-solid-svg-icons";
+import { faMoneyBillTransfer } from "@fortawesome/free-solid-svg-icons";
+import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
@@ -59,6 +63,7 @@ if(!loginUser){
 
     const handleWidthdraw = (e)=>{
       e.preventDefault();
+      if(confirm("Are you sure, you want to continue this transaction?")){
 
       if(inputAmount > accntBal && inputAmount > 0){
         alert("Not enough Balance!")
@@ -114,6 +119,7 @@ if(!loginUser){
           localStorage.setItem("bankTransactions", JSON.stringify(bankTrans));
         }
       }
+    }
       setshowwidth(false);
     }
 
@@ -130,6 +136,7 @@ if(!loginUser){
 
     const handleDepo = (e) => {
       e.preventDefault(e);
+      if(confirm("Are you sure, you want to continue this transaction?")){
 
       let userAccnt = JSON.parse(localStorage.getItem('accounts'));
       let currentUser = JSON.parse(localStorage.getItem('LoginUser'));
@@ -183,6 +190,7 @@ if(!loginUser){
         // setbanktrans(oldbankArr => [...oldbankArr,saveTransaction]);
         // localStorage.setItem("bankTransactions", JSON.stringify(saveTransaction));
       }
+    }
         setshowDepo(false);
     }
 
@@ -196,7 +204,7 @@ if(!loginUser){
 
     const handleSendMoney = (e) => {
       e.preventDefault();
-      // console.log('test');
+      if(confirm("Are you sure, you want to continue this transaction?")){
 
       let getAccnt = JSON.parse(localStorage.getItem('accounts'));
       let currentUser = JSON.parse(localStorage.getItem('LoginUser'));
@@ -300,15 +308,13 @@ if(!loginUser){
         bankTrans.push(saveTransactionReceiver);
         localStorage.setItem("bankTransactions", JSON.stringify(bankTrans));
       }
-
-
-
+    }
       setshowSendMoney(false);
     }
 
     let tblerows = null;
     if(bankTrans){
-      tblerows=<tbody>
+      tblerows=<tbody >
       {
         bankTrans.map((x,i)=>{
           if(x.accountNo === loginUser.Accntno ){
@@ -353,24 +359,42 @@ if(!loginUser){
     </div>
 
     <div className="bankbtn-container">
-      <button className='btn btn-dark' onClick={handleShowDeposit}>Deposit</button>
-      <button className='btn btn-dark'onClick={handleShowSendMoney}>Send Money</button>
-      <Button variant="dark" onClick={handleShowWidthdraw}>  Withdraw</Button>
+      <button className='btn btn-dark' onClick={handleShowDeposit}>
+      <FontAwesomeIcon icon={faMoneyBillTrendUp} className='iconSize'  size="2xl" />
+      <p>Deposit</p>
+      </button>
+
+      <button className='btn btn-dark'onClick={handleShowSendMoney}>
+      <FontAwesomeIcon icon={faMoneyBillTransfer} size="2xl" />
+      <p>Send Money</p>
+      </button>
+
+      <Button variant="dark" onClick={handleShowWidthdraw}>
+      <FontAwesomeIcon icon={faHandHoldingDollar} size="2xl" />
+      <p>Withdraw</p>
+      </Button>
     </div>
 
     <Modal show={showwidth} onHide={handleCloseWidthdraw}>
       <Modal.Header closeButton>
         <Modal.Title>Withdraw</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-      <label>Account No :</label><input type="text" placeholder='' value={loginUser.Accntno ? loginUser.Accntno: '' } disabled/>
-      </Modal.Body>
-      <Modal.Body>
-      <label>Amount :</label><input type="number" onChange={(e)=> setInputAmnt(e.target.value)} placeholder='Enter Amount' required/>
-      </Modal.Body>
-      <Modal.Body>
-      <label>Remarks :</label><input type="text" onChange={(e)=> setRemarks(e.target.value)} placeholder='Remarks' />
-      </Modal.Body>
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th className=''><label>Account No :</label></th>
+            <th><input type="text" placeholder='' value={loginUser.Accntno ? loginUser.Accntno: '' } disabled/></th>
+          </tr>
+          <tr>
+            <th><label>Amount :</label></th>
+            <th><input type="number" onChange={(e)=> setInputAmnt(e.target.value)} placeholder='Enter Amount' required/></th>
+          </tr>
+          <tr>
+            <th><label>Remarks :</label></th>
+            <th><input type="text" onChange={(e)=> setRemarks(e.target.value)} placeholder='Remarks' /></th>
+          </tr>
+        </thead>
+      </Table>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseWidthdraw}>
           Close
@@ -385,18 +409,22 @@ if(!loginUser){
       <Modal.Header closeButton>
         <Modal.Title>Deposit</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-      <label>Account No :</label><input type="text" placeholder='' value={loginUser.Accntno ? loginUser.Accntno: '' } disabled/>
-      </Modal.Body>
-
-      <Modal.Body>
-      <label>Enter Amount: </label><input type="number" onChange={(e)=> setInputAmnt(e.target.value)} required/>
-      </Modal.Body>
-
-      <Modal.Body>
-      <label>Description: </label><input type="text" onChange={(e)=> setRemarks(e.target.value)} />
-      </Modal.Body>
-
+      <Table striped bordered hover size="sm">
+      <thead>
+        <tr>
+          <th className=''><label>Account No :</label></th>
+          <th><input type="text" placeholder='' value={loginUser.Accntno ? loginUser.Accntno: '' } disabled/></th>
+        </tr>
+        <tr>
+          <th><label>Enter Amount: </label></th>
+          <th><input type="number" onChange={(e)=> setInputAmnt(e.target.value)} required/></th>
+        </tr>
+        <tr>
+          <th><label>Description: </label></th>
+          <th><input type="text" onChange={(e)=> setRemarks(e.target.value)} /></th>
+        </tr>
+      </thead>
+    </Table>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseDepo}>
           Close
@@ -412,25 +440,31 @@ if(!loginUser){
         <Modal.Title>Send Money</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>
-      <label> Account Number:</label>
-      <input type="text" onChange={(e)=> setSMAccntNo(e.target.value)} required/>
-      </Modal.Body>
 
-      <Modal.Body>
-      <label> Account Name:</label>
-      <input type="text" onChange={(e)=> setSMAccntName(e.target.value)} required/>
-      </Modal.Body>
+      <Table striped bordered hover size="sm">
+      <thead>
+        <tr>
+          <th className=''><label> Account Number:</label></th>
+          <th><input type="text" onChange={(e)=> setSMAccntNo(e.target.value)} required/></th>
+        </tr>
+        <tr>
+          <th><label> Account Name:</label></th>
+          <th><input type="text" onChange={(e)=> setSMAccntName(e.target.value)} required/></th>
+        </tr>
+        <tr>
+          <th> <label> Amount   :</label></th>
+          <th><input type="number" onChange={(e)=> setInputAmnt(e.target.value)} required/></th>
+        </tr>
+        <tr>
+          <th> <label> Remarks   :</label></th>
+          <th><input type="text" onChange={(e)=> setRemarks(e.target.value)} /></th>
+        </tr>
+      </thead>
+    </Table>
 
-      <Modal.Body>
-      <label> Amount   :</label>
-      <input type="number" onChange={(e)=> setInputAmnt(e.target.value)} required/>
-      </Modal.Body>
 
-      <Modal.Body>
-      <label> Remarks   :</label>
-      <input type="text" onChange={(e)=> setRemarks(e.target.value)} />
-      </Modal.Body>
+
+     
 
       <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseSendMoney}>
@@ -452,23 +486,27 @@ if(!loginUser){
     <Col></Col>
     <Col>
     
+    <div className='tableContainer'>
+      <Table responsive striped bordered hover size="sm" >
+        <thead className='theadcontainer'>
+          <tr >
+            <th>TransNo</th>
+            <th>Date</th>
+            <th>From Account</th>
+            <th>Prev. Bank Bal.</th>
+            <th>Amount</th>
+            <th>Action</th>
+            <th>Receiver</th>
+            <th>Balance</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+          {tblerows}
+      </Table>
+      </div>
 
-    <Table striped bordered hover size="sm">
-    <thead>
-      <tr>
-        <th>TransNo</th>
-        <th>Date</th>
-        <th>From Account</th>
-        <th>Prev. Bank Bal.</th>
-        <th>Amount</th>
-        <th>Action</th>
-        <th>Receiver</th>
-        <th>Balance</th>
-        <th>Remarks</th>
-      </tr>
-    </thead>
-      {tblerows}
-  </Table>
+
+    
     
     
     

@@ -114,49 +114,55 @@ const handleChange = (e)=> {
   }
   return (
     <>
-    <h1> Sign Up </h1>
-    <div className="logincontainer">
+    <div className='signupMaincontainer'>
+
+    <div className='signupcontainer'>
     <div>
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="fullname">
-        <Form.Label>Full Name</Form.Label>
-        <Form.Control type="text"  placeholder="Enter Full Name" onChange={(e)=> setfullname(e.target.value)} required />
-        <Form.Text className="text-muted">
-          We'll never share your data with anyone else.
-        </Form.Text>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="username">
-        <Form.Label>Username</Form.Label>
-        <Form.Control type="text"  placeholder="Enter username" onChange={(e)=> setusername(e.target.value)} required />
-        <Form.Text className="text-muted">
-        </Form.Text>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="Password">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setpassword(e.target.value)} required/>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="ConfirmPassword">
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control  className={cnwarning ? 'warning':''} type="password" placeholder="Confirm Password" onChange={handleChange} required/>
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
-      <div>
-      <Form.Text className="text-muted">
-          Already have account? Login
-          <button onClick={
-            navigateLogin
-            // ()=>props.onFormSwitch('LoginForm')
-          } className="btn btn-link" >Here</button> 
+    <h1> Sign Up </h1>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="fullname">
+          <Form.Label>Full Name</Form.Label>
+          <Form.Control type="text"  placeholder="Enter Full Name" onChange={(e)=> setfullname(e.target.value)} required />
+          <Form.Text className="text-muted">
+            We'll never share your data with anyone else.
           </Form.Text>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="username">
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="text"  placeholder="Enter username" onChange={(e)=> setusername(e.target.value)} required />
+          <Form.Text className="text-muted">
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="Password">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setpassword(e.target.value)} required/>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="ConfirmPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control  className={cnwarning ? 'warning':''} type="password" placeholder="Confirm Password" onChange={handleChange} required/>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+        <div>
+        <Form.Text className="text-muted">
+            Already have account? Login
+            <button onClick={
+              navigateLogin
+              // ()=>props.onFormSwitch('LoginForm')
+            } className="btn btn-link signup_here" >Here</button> 
+            </Form.Text>
+        </div>
       </div>
-    </div>
-    </div>
+      </div>
+      <div className="logindiv">
+      <h5> </h5>
+      </div>
+      </div>
     </>
   );
 

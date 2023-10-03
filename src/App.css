@@ -4,19 +4,15 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  /* padding: 2rem; */
   text-align: center;
-  /* background-image: linear-gradient(pink); */
-  /* font-family: 'Croissant One', cursive; */
   font-family: 'Quicksand', sans-serif;
-  background-color: #7ec3af;
+  background-color: #c5c6c8 !important;
   margin-bottom: 5px !important;
 
   
 }
 body{
-  /* background-color: #7ec3af; */
-  background-color: #039b9e !important;
+  background-color: #c5c6c8 !important;
 }
 
 
