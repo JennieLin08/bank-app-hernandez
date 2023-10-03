@@ -360,17 +360,17 @@ if(!loginUser){
     </div>
 
     <div className="bankbtn-container">
-      <button className='btn btn-dark' onClick={handleShowDeposit}>
+      <button className='btn btn-dark dash-btn' onClick={handleShowDeposit}>
       <FontAwesomeIcon icon={faMoneyBillTrendUp} className='iconSize'  size="2xl" />
       <p>Deposit</p>
       </button>
 
-      <button className='btn btn-dark'onClick={handleShowSendMoney}>
+      <button className='btn btn-dark dash-btn'onClick={handleShowSendMoney}>
       <FontAwesomeIcon icon={faMoneyBillTransfer} size="2xl" />
       <p>Send Money</p>
       </button>
 
-      <Button variant="dark" onClick={handleShowWidthdraw}>
+      <Button variant="dark" className='dash-btn' onClick={handleShowWidthdraw}>
       <FontAwesomeIcon icon={faHandHoldingDollar} size="2xl" />
       <p>Withdraw</p>
       </Button>
