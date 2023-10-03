@@ -14,6 +14,7 @@ import { faMoneyBillTransfer } from "@fortawesome/free-solid-svg-icons";
 import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
 
 const Dashboard = (props) => {
+  localStorage.removeItem('alreadyLoaded');
   const navigate = useNavigate();
   let saveLoginUser = {};
   const [remarks, setRemarks] = useState('');

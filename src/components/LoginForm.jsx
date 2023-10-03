@@ -11,6 +11,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 function LoginForm(props) {
+    const alreadyLoaded = localStorage.getItem('alreadyLoaded');
+        if (!alreadyLoaded) {
+           localStorage.setItem('alreadyLoaded', true);
+           window.location.reload();
+        }
+
+        
     const { setCurrentPage, setLoggedInUser } = props
     const [username, setusername]= useState('');
     const [password , setPassword] = useState('');
@@ -18,10 +25,25 @@ function LoginForm(props) {
     
 const accounts = JSON.parse(localStorage.getItem('accounts'));
 
+// function componentDidMount() {
+//     const reloadCount = sessionStorage.getItem('reloadCount');
+//     if(reloadCount < 2) {
+//       sessionStorage.setItem('reloadCount', String(reloadCount + 1));
+//       window.location.reload();
+//     } else {
+//       sessionStorage.removeItem('reloadCount');
+//     }
+//   }
+
+
+
+
+
 
 useEffect(()=>{
 let logoutuser = {}
 localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
+
 
 
   },[]);

@@ -27,7 +27,6 @@ const Header = () => {
     // const userLogout = {};
     // localStorage.setItem('LoginUser',  JSON.stringify(userLogout));
     // navigate('/login');
-  
     window. location. reload();
   }
   return (
