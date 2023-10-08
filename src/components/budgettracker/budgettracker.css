@@ -1,14 +1,33 @@
+.accountbal-expense-container{
+   
+    border: 2px #2c4d68  solid;
+    display: flex;
+    border-radius: 10px;
+    padding: 20px;
+    justify-content: center;
+    width: 400px;
+    height: 100px !important;
+    margin: 0 auto;
 
+    padding: 10px;
+    box-shadow: 5px 5px 20px #2c4d68 inset;
+}
 
 table{
     border-radius: 5px;
     /* height: 400px; */
-
 }
 
-tr,td,th{
-    /* border-bottom: 1px solid #ddd !important; */
-    background-color: #2c4d68 !important;
-    border-color: #c5c6c8;
+th{
+    background-color: #2c4d68  !important;
     color:#c5c6c8 !important;
+}
+tr,td{
+
+    /* background-color: #2c4d68 !important; */
+    /* border-color: #c5c6c8; */
+    /* color:#c5c6c8 !important; */
+
+    border-color: black;
+    background-color: #c5c6c8 !important;
 }

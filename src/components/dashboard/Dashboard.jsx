@@ -138,7 +138,6 @@ if(!loginUser){
     const handleDepo = (e) => {
       e.preventDefault(e);
       if(confirm("Are you sure, you want to continue this transaction?")){
-
       let userAccnt = JSON.parse(localStorage.getItem('accounts'));
       let currentUser = JSON.parse(localStorage.getItem('LoginUser'));
       for(let i=0;i<userAccnt.length;i++){
@@ -193,6 +192,7 @@ if(!loginUser){
       }
     }
         setshowDepo(false);
+        
     }
 
     //send Money
@@ -372,13 +372,13 @@ if(!loginUser){
 
       <Button variant="dark" className='dash-btn' onClick={handleShowWidthdraw}>
       <FontAwesomeIcon icon={faHandHoldingDollar} size="2xl" />
-      <p>Withdraw</p>
+      <p>Widthdraw</p>
       </Button>
     </div>
 
     <Modal show={showwidth} onHide={handleCloseWidthdraw}>
       <Modal.Header closeButton>
-        <Modal.Title>Withdraw</Modal.Title>
+        <Modal.Title>Widthdraw</Modal.Title>
       </Modal.Header>
       <Table striped bordered hover size="sm">
         <thead>
@@ -491,12 +491,12 @@ if(!loginUser){
       <Table responsive striped bordered hover size="sm" >
         <thead className='theadcontainer'>
           <tr >
-            <th>TransNo</th>
+            <th>ID No.</th>
             <th>Date</th>
-            <th>From Account</th>
+            <th>Sender</th>
             <th>Prev. Bank Bal.</th>
             <th>Amount</th>
-            <th>Action</th>
+            <th>type</th>
             <th>Receiver</th>
             <th>Balance</th>
             <th>Remarks</th>
