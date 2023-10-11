@@ -9,6 +9,16 @@ font-family: 'Red Hat Display', sans-serif;
 font-family: 'Rubik Microbe', cursive;
 font-family: 'Titan One', cursive; */
 
+.navbar{
+    /* background-color: #039b9e !important; */
+    /* background-color: #7ec3af !important; */
+    background-color: #2c4d68 !important;
+    color: #c5c6c8;
+}
+.btn{
+    color: #c5c6c8;
+}
+
 
 Navbar{
     overflow: hidden;
@@ -22,7 +32,8 @@ Navbar{
 
 .brand{
     font-weight: bold;
-    color: rgb(20, 77, 104);
+    /* color: rgb(20, 77, 104); */
+    color: #c5c6c8;
     font-family: 'Gruppo', sans-serif;
 }
 .appStyle{
@@ -32,6 +43,7 @@ Navbar{
 .small{
     font-size: small;
     font-style: italic;
-    color: rgb(20, 77, 104);
+    /* color: rgb(20, 77, 104); */
+    color: #c5c6c8;
     font-family: 'Croissant One', cursive;
 }

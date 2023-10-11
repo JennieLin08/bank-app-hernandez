@@ -1,0 +1,9 @@
+.footer{
+    background-color: #2c4d68 !important;
+    height: 60px;
+    position:sticky;
+left:0;
+bottom:0;
+right:0;
+/* margin: 10px; */
+}

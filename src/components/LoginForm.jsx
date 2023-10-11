@@ -4,13 +4,23 @@ import './loginform.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 function LoginForm(props) {
+    const alreadyLoaded = localStorage.getItem('alreadyLoaded');
+        if (!alreadyLoaded) {
+           localStorage.setItem('alreadyLoaded', true);
+           window.location.reload();
+        }
     const { setCurrentPage, setLoggedInUser } = props
     const [username, setusername]= useState('');
     const [password , setPassword] = useState('');
     const navigate = useNavigate();
- 
+    
 const accounts = JSON.parse(localStorage.getItem('accounts'));
 
 useEffect(()=>{
@@ -18,7 +28,6 @@ let logoutuser = {}
 localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
 
   },[]);
-
     const handleSubmit = (e)=>{
         e.preventDefault();
         const findUser = accounts.find(user => {
@@ -34,7 +43,6 @@ localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
                     return false;
                 }
            });
-           
 
            if(!findUser){
                 alert('Wrong username or Password!');
@@ -47,9 +55,20 @@ localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
     }
   return (
     <>
-    <h1> Login </h1>
-    <div className="logincontainer">
-    <div>
+    
+<Container className="logincontainer">
+
+<Row>
+  <Col className='divcol'>
+  <Navbar.Brand href="" ><h1 className='loginbrand'>BANKO <span className="appStyle">APP</span> </h1>
+        <div className='loginsmall'><h4>'It’s your money.'</h4></div>
+        </Navbar.Brand>
+  </Col>
+
+  <Col>
+    <div >
+        <div className='loginform'>
+        <h5> Login </h5>
         <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formLoginusername">
             <Form.Label>Username</Form.Label>
@@ -64,7 +83,7 @@ localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
             <Form.Control value={password} onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="Password" required/>
         </Form.Group>
         
-        <Button variant="primary" type="submit">
+        <Button variant="primary" className='btnlogin' type="submit">
             Submit
         </Button>
         </Form>
@@ -73,12 +92,17 @@ localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
             No account yet? Click
             <button onClick={
                 navigateSignup
-                // ()=>props.onFormSwitch('SignupForm')
-        } className="btn btn-link" >Sign Up</button> 
+        } className="btn btn-link btnSignup" >Sign Up</button> 
             </Form.Text>
         </div>
         </div>
     </div>
+    <div className='bot'>
+        <h1>  </h1>
+    </div>
+    </Col>
+  </Row>
+</Container>
     </>
   );
 }

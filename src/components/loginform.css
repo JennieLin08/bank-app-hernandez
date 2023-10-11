@@ -1,13 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Croissant+One&family=Gruppo&family=Quicksand:wght@600&family=Red+Hat+Display:wght@600&family=Rubik+Microbe&family=Titan+One&display=swap');
+
 .logincontainer{
-    border: 1px solid rgb(236, 225, 225);
-    display: flex;
+    display: inline-flex;
     border-radius: 20px;
     padding: 20px;
     justify-content: center;
-    width: 400px;
+    align-items: center;
+    align-content: center;
+    vertical-align: middle;
+    width: 800px;
+    margin: 20px;
+    background-color: #2c4d68;
+    background-image: url("../assets/img/img.jpg");
+    background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+.divcol{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+body{
+    min-height: 480px;;
+}
+.loginform{
+    width: 350px;
     margin: 0 auto;
-    /* text-align: center; */
+    padding: 10px;
+    border: 1px solid rgb(31, 29, 39);
+    border-radius: 20px;
+    background-color: rgb(44, 77, 104,0.5);
 }
 
+.bot{
+    height: 15px;
+}
 
+.btnSignup{
+    color:#206ab1 !important;
+    color:black !important;
+}
+
+Row{
+    margin: 10px !important;
+}
+
+.loginsmall{
+    font-style: italic;
+    color: black;
+    font-family: 'Croissant One', cursive;
+    font-weight: 800 !important;
+}
+
+.loginbrand{
+    font-weight: 800 !important;
+    color: #c5c6c8;
+    font-family: 'Gruppo', sans-serif;
+}
+.appStyle{
+    color: rgb(8, 8, 8);
+}
 

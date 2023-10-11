@@ -1,29 +1,47 @@
 
+    .dash-btn{
+        padding-top: 20px;
+    }
     .accountbal-container{
-        border: 1px solid rgb(236, 225, 225);
+        border: 2px #2c4d68  solid;
         display: flex;
-        border-radius: 20px;
+        border-radius: 10px;
         padding: 20px;
         justify-content: center;
         width: 400px;
+        height: 200px;
         margin: 0 auto;
-        /* text-align: center; */
+        padding: 10px;
+        box-shadow: 5px 5px 20px #2c4d68 inset;
     }
 
     .bankbtn-container{
-        /* border: 1px solid rgb(236, 225, 225); */
         display: flex;
         border-radius: 20px;
         padding: 20px;
         justify-content: center;
         width: 400px;
         margin: 0 auto;
-        /* text-align: center; */
+    }
+    .iconSize{
+        width: 100x;
     }
 
     .bankbtn-container .btn{
-        /* padding: 5px; */
         margin: 5px;
+        background-color: #2c4d68 ;
     }
+
+    h4{
+        margin: 10px;
+    }
+
+
+    .tableContainer{
+        border-radius: 20px;     
+    }
+
+
+    
 
 

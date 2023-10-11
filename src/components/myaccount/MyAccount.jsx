@@ -5,36 +5,46 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Table from 'react-bootstrap/Table';
 const MyAccount = () => {
-
   const loginUser = JSON.parse(localStorage.getItem('LoginUser'));
   if(!loginUser){
       Navigate('/login');
     }
-
   return (
+    <>
     <div>
        <h3 >My Account Details</h3>
-
-       <Container>
-      <Row xs={10} md={10} lg={10} className="d-flex justify-content-md-end">
-        <Col className="justify-content-md-end">Name : </Col>
-        <Col className="justify-content-md-start">{loginUser.fullname}</Col>
-      </Row>
-      <Row xs={10} md={10} lg={8}>
-        <Col>Username :</Col>
-        <Col>{loginUser.username}</Col>
-      </Row>
-      <Row xs={10} md={10} lg={10} className="justify-content-md-center">
-        <Col >Account Number : </Col>
-        <Col >{loginUser.Accntno}</Col>
-      </Row>
-      <Row xs={10} md={10} lg={10}>
-        <Col>Password :</Col>
-        <Col>{loginUser.password}</Col>
-      </Row>
-    </Container>
     </div>
+    <Container>
+  <Row>
+   
+    <Col>
+    
+    <Table striped bordered hover size="sm">
+    <thead>
+      <tr>
+        <th className=''>NAME :</th>
+        <th>{loginUser.fullname}</th>
+      </tr>
+      <tr>
+        <th>USERNAME :</th>
+        <th>{loginUser.username}</th>
+      </tr>
+      <tr>
+        <th>ACCOUNT NUMBER :</th>
+        <th>{loginUser.Accntno}</th>
+      </tr>
+      <tr>
+        <th>PASSWORD :</th>
+        <th>{loginUser.password}</th>
+      </tr>
+    </thead>
+  </Table>
+    </Col>
+  </Row>
+</Container>
+</>
   )
 }
 

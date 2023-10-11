@@ -1,14 +1,33 @@
-.logincontainer{
-    border: 1px solid rgb(236, 225, 225);
-    display: flex;
+
+.signupMaincontainer{
+    background-image: url("/src/assets/img/img.jpg"); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    color: black;
+}
+.logindiv{
+    height: 10px;
+}
+.signupcontainer{
+    border: 1px solid rgb(33, 32, 49);
+    display: inline-flex;
     border-radius: 20px;
     padding: 20px;
     justify-content: center;
+    align-items: center;
     width: 400px;
-    margin: 0 auto;
-    /* text-align: center; */
+    margin: 20px;
+    background-color: rgb(44, 77, 104,0.5);
 }
 .warning:focus, .warning{
     border: 1px red solid;
+}
+.signup_here{
+    color: black !important;
+}
+.text-muted{
+    color: black !important;
+
 }
 
