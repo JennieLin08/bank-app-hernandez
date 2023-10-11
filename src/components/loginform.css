@@ -9,7 +9,6 @@
     align-content: center;
     vertical-align: middle;
     width: 800px;
-    /* margin: 0 auto; */
     margin: 20px;
     background-color: #2c4d68;
     background-image: url("../assets/img/img.jpg");
@@ -21,22 +20,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
 }
 body{
     min-height: 480px;;
 }
 .loginform{
-  
     width: 350px;
     margin: 0 auto;
     padding: 10px;
     border: 1px solid rgb(31, 29, 39);
     border-radius: 20px;
     background-color: rgb(44, 77, 104,0.5);
-    /* background-color: #c5c6c8; */
-    
-
 }
 
 .bot{
@@ -52,14 +46,8 @@ Row{
     margin: 10px !important;
 }
 
-.loginbanko{
-    /* color: ; */
-}
-
 .loginsmall{
-    /* font-size: 500px; */
     font-style: italic;
-    /* color: rgb(20, 77, 104); */
     color: black;
     font-family: 'Croissant One', cursive;
     font-weight: 800 !important;
@@ -67,7 +55,6 @@ Row{
 
 .loginbrand{
     font-weight: 800 !important;
-    /* color: rgb(20, 77, 104); */
     color: #c5c6c8;
     font-family: 'Gruppo', sans-serif;
 }

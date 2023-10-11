@@ -9,23 +9,14 @@ import BudgetTracker from './components/budgettracker/BudgetTracker';
 import MyAccount from './components/myaccount/MyAccount';
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-// import LoginForm from './components/LoginForm'
 
 function App() {
-  // const navigate = useNavigate();
   const [loggedInUser, setLoggedInUser] = useState(null)
   const [currentForm, setCurrentForm] = useState('LoginForm');
-  // const toggleForm = (formName)=>{
-  //   setCurrentForm(formName);
-  // }
-
-
 
   const currentUser = (user)=>{
     setLoggedInUser(user);
   }
-
-  
 
   return (
     <>

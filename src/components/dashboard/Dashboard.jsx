@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import './dashboard.css';
 import { Navigate, useNavigate } from 'react-router-dom'
-// import { ReactTableScroll } from 'react-table-scroll';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
@@ -12,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyBillTrendUp } from "@fortawesome/free-solid-svg-icons";
 import { faMoneyBillTransfer } from "@fortawesome/free-solid-svg-icons";
 import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+import DataTable from 'react-data-table-component';
 
 const Dashboard = (props) => {
   localStorage.removeItem('alreadyLoaded');
@@ -39,20 +39,14 @@ const loginUser = JSON.parse(localStorage.getItem('LoginUser'));
 if(!loginUser){
   Navigate('/login');
 }
-
   useEffect(()=>{
-
-    
-  if(localStorage.getItem('bankTransactions')){
-    const getbanktrans = localStorage.getItem('bankTransactions');
-    const parsedgetbanktrans = JSON.parse(localStorage.getItem('bankTransactions'))
-    setbanktrans(parsedgetbanktrans);
-    // console.log(bankTrans);
-  }else{
-    localStorage.setItem('bankTransactions', JSON.stringify(bankTrans));
-  }
-
-   
+    if(localStorage.getItem('bankTransactions')){
+      const getbanktrans = localStorage.getItem('bankTransactions');
+      const parsedgetbanktrans = JSON.parse(localStorage.getItem('bankTransactions'))
+      setbanktrans(parsedgetbanktrans);
+    }else{
+      localStorage.setItem('bankTransactions', JSON.stringify(bankTrans));
+    }
   },[]);
 
 
@@ -97,7 +91,6 @@ if(!loginUser){
             Remarks: remarks,
             currentBalance: accntBal - parseInt(inputAmount)
           }
-          // setbanktrans(oldbankArr => [...oldbankArr,saveTransaction]);
           bankTrans.push(saveTransaction);
           localStorage.setItem("bankTransactions", JSON.stringify(bankTrans));
         }else{
@@ -165,7 +158,6 @@ if(!loginUser){
           Remarks: remarks,
           currentBalance: parseInt(inputAmount) + accntBal
         }
-        // setbanktrans(oldbankArr => [...oldbankArr,saveTransaction]);
         bankTrans.push(saveTransaction);
         localStorage.setItem("bankTransactions", JSON.stringify(bankTrans));
       }else{
@@ -187,16 +179,12 @@ if(!loginUser){
         bankTrans.push(saveTransaction);
         localStorage.setItem("bankTransactions", JSON.stringify(bankTrans));
 
-        // setbanktrans(oldbankArr => [...oldbankArr,saveTransaction]);
-        // localStorage.setItem("bankTransactions", JSON.stringify(saveTransaction));
       }
     }
         setshowDepo(false);
-        
     }
 
-    //send Money
-
+    //send Money code
     const handleCloseSendMoney = () => setshowSendMoney(false);
     const handleShowSendMoney = () => setshowSendMoney(true);
     const [SMAccntno,setSMAccntNo] = useState('');
@@ -206,7 +194,6 @@ if(!loginUser){
     const handleSendMoney = (e) => {
       e.preventDefault();
       if(confirm("Are you sure, you want to continue this transaction?")){
-
       let getAccnt = JSON.parse(localStorage.getItem('accounts'));
       let currentUser = JSON.parse(localStorage.getItem('LoginUser'));
       let SMaccntExists = false;
@@ -232,8 +219,6 @@ if(!loginUser){
         }
       }
       localStorage.setItem('accounts', JSON.stringify(getAccnt));
-      // const updateAccnts = localStorage.setItem('accounts', JSON.stringify(getReceiverAccnt));
-
 
       if(localStorage.getItem("bankTransactions")){
         const getTrans = JSON.parse(localStorage.getItem("bankTransactions"));
@@ -313,31 +298,95 @@ if(!loginUser){
       setshowSendMoney(false);
     }
 
-    let tblerows = null;
-    if(bankTrans){
-      tblerows=<tbody >
+    const columns = [
       {
-        bankTrans.map((x,i)=>{
-          if(x.accountNo === loginUser.Accntno ){
-            return (
-              <tr key={i}>
-                <td >{x.transNo}</td>
-                <td >{x.date}</td>
-                <td >{x.fromAccnt}</td>
-                <td >{x.BankAmnt}</td>
-                <td >{x.amount}</td>
-                <td >{x.action}</td>
-                <td >{x.sendToAccntName}</td>
-                <td >{x.currentBalance}</td>
-                <td >{x.Remarks}</td>
-              </tr>
-            );
-          }
-        })
+        name:'ID No',
+        selector: row => row.idno,
+        sortable:true
+      },
+      {
+        name:'Date',
+        selector: row => row.date,
+        sortable:true
+      },
+      {
+        name:'Sender',
+        selector: row => row.sender
+      },
+      {
+        name:'Balance',
+        selector: row => row.balance
+      },
+      {
+        name:'Amount',
+        selector: row => row.amount,
+        sortable:true
+      },
+      {
+        name:'Type',
+        selector: row => row.type,
+        sortable:true
+      },
+      {
+        name:'Receiver',
+        selector: row => row.receiver
+      },
+      {
+        name:'Running Balance',
+        selector: row => row.runningbalance
+      },
+      {
+        name:'Remarks',
+        selector: row => row.remarks
       }
-      </tbody>
-      
+    ];
+    
+    const data = [];
+    for(let x=0;x < bankTrans.length;x++){
+    const savedata = 
+      {
+        idno: bankTrans[x].transNo,
+        date: bankTrans[x].date,
+        sender: bankTrans[x].fromAccnt,
+        balance: bankTrans[x].BankAmnt,
+        amount: bankTrans[x].amount.toLocaleString(undefined, {maximumFractionDigits:2}),
+        type: bankTrans[x].action,
+        receiver: bankTrans[x].sendToAccntName,
+        runningbalance: bankTrans[x].currentBalance.toLocaleString(undefined, {maximumFractionDigits:2}),
+        remarks: bankTrans[x].Remarks
+      }
+      data.push(savedata);
+      localStorage.setItem("data", JSON.stringify(data));
+  }
+
+  // function handleSearch(e){
+  //   const newData = data.filter(row=>{
+  //     return row.name.toLowerCase().includes(e.target.value.toLowerCase())
+  //   })
+  // }
+ 
+  const tableCustomStyles = {
+    headRow: {
+      style: {
+        color:'#223336',
+        backgroundColor: '#e7eef0'
+      },
+    },
+    rows: {
+      style: {
+        color: "STRIPEDCOLOR",
+        backgroundColor: '#e7eef0'
+      },
+      stripedStyle: {
+        color: "NORMALCOLOR",
+        backgroundColor: "NORMALCOLOR"
+      }
     }
+  }
+
+  const handleCloseRecordHis = () => setshowRecordHis(false);
+  const handleShowRecordHis = () => setshowRecordHis(true);
+  const [showRecordHis, setshowRecordHis] = useState(false);
 
   return (
     <>    
@@ -441,7 +490,6 @@ if(!loginUser){
         <Modal.Title>Send Money</Modal.Title>
       </Modal.Header>
 
-
       <Table striped bordered hover size="sm">
       <thead>
         <tr>
@@ -463,10 +511,6 @@ if(!loginUser){
       </thead>
     </Table>
 
-
-
-     
-
       <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseSendMoney}>
           Close
@@ -477,48 +521,31 @@ if(!loginUser){
       </Modal.Footer>
     </Modal>
 
-
-
-
-  <h3>Transaction History</h3>
-
+    <Button variant="dark" className='dash-btn' onClick={handleShowRecordHis}>
+    <p>View Transaction History</p>
+    </Button>
+    <Modal show={showRecordHis} onHide={handleCloseRecordHis}>
+      <Modal.Header closeButton>
+        <Modal.Title><h3>Transaction History</h3></Modal.Title>
+      </Modal.Header>
   <Container>
   <Row>
-    <Col></Col>
     <Col>
-    
     <div className='tableContainer'>
-      <Table responsive striped bordered hover size="sm" >
-        <thead className='theadcontainer'>
-          <tr >
-            <th>ID No.</th>
-            <th>Date</th>
-            <th>Sender</th>
-            <th>Prev. Bank Bal.</th>
-            <th>Amount</th>
-            <th>type</th>
-            <th>Receiver</th>
-            <th>Balance</th>
-            <th>Remarks</th>
-          </tr>
-        </thead>
-          {tblerows}
-      </Table>
+     <DataTable
+     className='dbTableContainer'
+     columns={columns}
+     data={data}
+     fixedHeader
+     pagination
+     customStyles={tableCustomStyles}
+     >
+     </DataTable>
       </div>
-
-
-    
-    
-    
-    
-    
     </Col>
-    <Col></Col>
   </Row>
 </Container>
-  
-
- 
+</Modal>
 
     </>
 

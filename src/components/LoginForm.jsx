@@ -16,8 +16,6 @@ function LoginForm(props) {
            localStorage.setItem('alreadyLoaded', true);
            window.location.reload();
         }
-
-        
     const { setCurrentPage, setLoggedInUser } = props
     const [username, setusername]= useState('');
     const [password , setPassword] = useState('');
@@ -25,29 +23,11 @@ function LoginForm(props) {
     
 const accounts = JSON.parse(localStorage.getItem('accounts'));
 
-// function componentDidMount() {
-//     const reloadCount = sessionStorage.getItem('reloadCount');
-//     if(reloadCount < 2) {
-//       sessionStorage.setItem('reloadCount', String(reloadCount + 1));
-//       window.location.reload();
-//     } else {
-//       sessionStorage.removeItem('reloadCount');
-//     }
-//   }
-
-
-
-
-
-
 useEffect(()=>{
 let logoutuser = {}
 localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
 
-
-
   },[]);
-
     const handleSubmit = (e)=>{
         e.preventDefault();
         const findUser = accounts.find(user => {
@@ -63,7 +43,6 @@ localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
                     return false;
                 }
            });
-           
 
            if(!findUser){
                 alert('Wrong username or Password!');
@@ -87,8 +66,6 @@ localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
   </Col>
 
   <Col>
-    
-
     <div >
         <div className='loginform'>
         <h5> Login </h5>
@@ -115,7 +92,6 @@ localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
             No account yet? Click
             <button onClick={
                 navigateSignup
-                // ()=>props.onFormSwitch('SignupForm')
         } className="btn btn-link btnSignup" >Sign Up</button> 
             </Form.Text>
         </div>
@@ -124,10 +100,7 @@ localStorage.setItem("LoginUser", JSON.stringify(logoutuser));
     <div className='bot'>
         <h1>  </h1>
     </div>
-
-
     </Col>
-    
   </Row>
 </Container>
     </>

@@ -7,30 +7,20 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 const MyAccount = () => {
-
   const loginUser = JSON.parse(localStorage.getItem('LoginUser'));
   if(!loginUser){
       Navigate('/login');
     }
-
   return (
     <>
-  
     <div>
        <h3 >My Account Details</h3>
-
-      
     </div>
-
-
-
     <Container>
   <Row>
    
-
     <Col>
     
-
     <Table striped bordered hover size="sm">
     <thead>
       <tr>
@@ -50,15 +40,11 @@ const MyAccount = () => {
         <th>{loginUser.password}</th>
       </tr>
     </thead>
-
   </Table>
     </Col>
-
   </Row>
 </Container>
 </>
-
-
   )
 }
 

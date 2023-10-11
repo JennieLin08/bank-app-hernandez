@@ -4,9 +4,6 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-// import { useNavigate } from 'react-router-dom';
-// import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-
 
 const Header = () => {
   let online = false;
@@ -17,16 +14,11 @@ const Header = () => {
     }
   }
 
-  
   useEffect(()=>{
     
     },[]);
 
   const handleLogout = (e)=> {
-    // e.preventDefault();
-    // const userLogout = {};
-    // localStorage.setItem('LoginUser',  JSON.stringify(userLogout));
-    // navigate('/login');
     window. location. reload();
   }
   return (

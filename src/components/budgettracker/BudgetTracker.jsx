@@ -14,8 +14,6 @@ const BudgetTracker = () => {
   const [inputDesc, setDesc] = useState('');
   const [expenseTrans, setExpensetrans] = useState([]);
   const [bankTrans, setbanktrans] = useState([]);
-  // const [totalExpense, setTotalExpense] = useState(0);
-
 
       const [editProduct, setEditProduct] = useState('');
       const [editPrice, setEditPrice] = useState(0);
@@ -26,7 +24,6 @@ const BudgetTracker = () => {
       const [editTransNo , setEditTransNo] = useState(0);
       const [transNoid, settransNoid ] = useState(0);
   
-
     useEffect(()=>{
         if(!localStorage.getItem("expenseTrans")){
           localStorage.setItem("expenseTrans", JSON.stringify(expenseTrans));
@@ -34,7 +31,6 @@ const BudgetTracker = () => {
           const getExpenseTrans = JSON.parse(localStorage.getItem("expenseTrans"));
           setExpensetrans(getExpenseTrans);
         }
-
         if(localStorage.getItem('bankTransactions')){
           const getbanktrans = localStorage.getItem('bankTransactions');
           const parsedgetbanktrans = JSON.parse(localStorage.getItem('bankTransactions'));
@@ -43,7 +39,6 @@ const BudgetTracker = () => {
         }else{
           localStorage.setItem('bankTransactions', JSON.stringify(bankTrans));
         }
-
         setTotal(price*qty);
         setEditTotal(editPrice*editQty);
       },[price,qty,editPrice,editQty]);
@@ -58,7 +53,6 @@ const BudgetTracker = () => {
     }
   }
   });
-
 
   const loginUser = JSON.parse(localStorage.getItem('LoginUser'));
         if(!loginUser){
@@ -85,11 +79,7 @@ const BudgetTracker = () => {
 
       const handleAddExpense = (e)=>{
         e.preventDefault();
-        // console.log(parseInt(inputAmnt));
-        
         if(price > accntBal && price > 0){
-          // console.log(price);
-          // console.log(accntBal);
           alert("Check your Balance!");
         }else{
           const getExpTrans = localStorage.getItem("expenseTrans");
@@ -114,7 +104,6 @@ const BudgetTracker = () => {
         const getExpenseTrans = JSON.parse(localStorage.getItem("expenseTrans"));
           setExpensetrans(getExpenseTrans);
         setshowExpense(false);
-        // window.location.reload();
       }
 
       const handleDelExpense = (e)=>{
@@ -122,10 +111,7 @@ const BudgetTracker = () => {
         console.log(parseInt(e.target.id));
         let getExpenseTrans =JSON.parse(localStorage.getItem("expenseTrans"));
         for(let i=0;i<getExpenseTrans.length;i++){
-          // console.log(parseInt(e.target.id));
-          // console.log(getExpenseTrans[i].transNo);
           if(parseInt(e.target.id) === getExpenseTrans[i].transNo){
-            // console.log('amnt');
             getExpenseTrans[i].status = "del";
           }
         }
@@ -141,35 +127,10 @@ const BudgetTracker = () => {
         setTotal(0);
       };
       const [showEditExpense, setshowEditExpense] = useState(false);
-
-      //edit expense code
-
-      // const handleEditExpense = (e)=>{
-        
-      //   e.preventDefault();
-      //   console.log(parseInt(e.target.id));
-      //   console.log(x.transNo);
-      //   const xpenseTrans = JSON.parse(localStorage.getItem("expenseTrans"));
-      //    for(let i=0;i<xpenseTrans.length ;i++){
-      //     if(parseInt(xpenseTrans[i].transNo) === parseInt(e.target.id)){
-      //       setEditProduct(xpenseTrans[i].Description);
-      //       setEditPrice(xpenseTrans[i].amount);
-      //       setEditQty(xpenseTrans[i].qty);
-      //       setEditAccntno(xpenseTrans[i].Accntno);
-      //       setEditBankAmnt(xpenseTrans[i].BankAmnt);
-      //       setEditTransNo(xpenseTrans[i].transNo);
-      //     }
-      //   }
-      //   setshowEditExpense(true);
-      // }
-
-
       const onChangeEditPrice = (e)=> {
         e.preventDefault();
         setEditPrice(e.target.value);          
       }
-
-
       const handleSaveEditExpense = (e)=>{
         
         e.preventDefault();
@@ -191,14 +152,9 @@ const BudgetTracker = () => {
         localStorage.setItem('expenseTrans', JSON.stringify(getXpenseTrans));
         setExpensetrans(getXpenseTrans);
         setshowEditExpense(false);
-        // alert('Save successfully');
-        // window. location. reload();
       }
-
       const handleApprovedExpense = (e) => {
         e.preventDefault();
-
-        
 
         const getXpenseTrans = JSON.parse(localStorage.getItem("expenseTrans"));
         const dateNow = new Date().toLocaleString();
@@ -215,14 +171,11 @@ const BudgetTracker = () => {
         }
         localStorage.setItem('expenseTrans', JSON.stringify(getXpenseTrans));
 
-
         let userAccnt = JSON.parse(localStorage.getItem('accounts'));
         let currentUser = JSON.parse(localStorage.getItem('LoginUser'));
         for(let i=0;i<userAccnt.length;i++){
           if(currentUser.id === userAccnt[i].id ){
             userAccnt[i].balance = userAccnt[i].balance - expamnt;
-            // console.log(currentUser.balance);
-            // console.log(userAccnt[i].balance);
             currentUser.balance = userAccnt[i].balance - expamnt;
           }
         }
@@ -268,7 +221,6 @@ const BudgetTracker = () => {
           localStorage.setItem("bankTransactions", JSON.stringify(bankTrans));
         }
         window. location. reload();
-
       }
     let tblerows = null;
     let totalExp = 0;
@@ -276,7 +228,6 @@ const BudgetTracker = () => {
       tblerows=<tbody>
       {
         expenseTrans.map((x,i)=>{
-          
           if(x.Accntno === loginUser.Accntno && x.status === "pending"){
             totalExp +=x.total;
             return (
@@ -287,7 +238,6 @@ const BudgetTracker = () => {
                 <td >{x.amount}</td>
                 <td >{x.qty}</td>
                 <td > ₱ {x.total}</td>
-                
                 <td >
                   <button className='btn btn-danger ' onClick={(e)=>{
                     let getExpenseTrans =JSON.parse(localStorage.getItem("expenseTrans"));
@@ -317,7 +267,6 @@ const BudgetTracker = () => {
                   <button className='btn btn-success ' id={x.transNo} onClick={handleApprovedExpense}>Approve</button>
                 </td>
               </tr>
-              
             );
           }
         })
@@ -329,12 +278,7 @@ const BudgetTracker = () => {
       <td></td>
     </tr>
 </tbody>
-      
     }
-
-   
-
-    
   return (
     <>
       <h1> Welcome to Budget Tracker</h1>
@@ -343,14 +287,11 @@ const BudgetTracker = () => {
           <h4> Account Balance  </h4>
           <h5>₱ {(accntBal - totalExp).toLocaleString()}</h5>
         </div>
-       
       </div>
       <div className="bankbtn-container">
       <button className='btn btn-dark' onClick={handleShowExpense}>Add Expense</button>
     </div>
-
     <h3>Expense Record</h3>
-
     <Table striped bordered hover size="sm" className='tblbt'>
       <thead >
         <tr >
@@ -363,16 +304,12 @@ const BudgetTracker = () => {
           <th>Action</th>
         </tr>
       </thead>
-        {tblerows}
-         
+        {tblerows} 
     </Table>
-
     <Modal show={showExpense} onHide={handleCloseExpense}>
     <Modal.Header closeButton>
       <Modal.Title>Add Expense</Modal.Title>
     </Modal.Header>
-
-
     <Table striped bordered hover size="sm">
       <thead>
         <tr>
@@ -393,7 +330,6 @@ const BudgetTracker = () => {
         </tr>
       </thead>
     </Table>
-
     <Modal.Footer>
       <Button variant="secondary" onClick={handleCloseExpense}>
         Close
@@ -403,8 +339,7 @@ const BudgetTracker = () => {
       </Button>
     </Modal.Footer>
   </Modal>
-
-
+  
   <Modal show={showEditExpense} onHide={handleCloseEditExpense}>
     <Modal.Header closeButton>
       <Modal.Title>Add Expense</Modal.Title>

@@ -6,9 +6,6 @@ import { v4 as uuid } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-// import ReactDOM from "react-dom";
-
-
 
 function SignupForm(props) {
   const userData = useRef();
@@ -21,24 +18,8 @@ function SignupForm(props) {
   const [accounts, setaccounts] = useState([]);
   let user = {};
  
-
-  // const [lsusername, setlsusername] = useState ( () => {
-  //   const savedlsusername = localStorage.getItem("accounts");
-  //    const parsedlsusername = JSON.parse(savedlsusername);
-  //    return parsedlsusername || "";
-  //    });
-
   const handleSubmit = (e)=>{
     e.preventDefault();
-
-    //  lsusername.find(user => {
-    //   if(username === user.username){
-    //     alert('username already exists!')
-    //     return false;
-    //   }
-    //  });
-
-
 
     if(!localStorage.getItem("accounts")){
       user = {
@@ -68,13 +49,10 @@ function SignupForm(props) {
 
       for(let i=0; i < parsedgetaccntno.length; i++ ){
         if(parsedgetaccntno[i].username === username){
-          // return ;
           return alert('User Already Exist!');
         }
       }
-
         if(confirmpass === password){
-          // setaccounts(oldArr => [...oldArr,user]);
           accounts.push(user);
           localStorage.setItem("accounts", JSON.stringify(accounts));
               navigate('/login');
@@ -82,7 +60,6 @@ function SignupForm(props) {
           alert('confirm your password!');
         }
     }
-
   }
 
 const handleChange = (e)=> {
@@ -93,8 +70,6 @@ const handleChange = (e)=> {
   }
   setconfirmpass(e.target.value);
 }
-
-
   useEffect(()=>{
     if(localStorage.getItem("accounts")){
       const checkAccounts = localStorage.getItem("accounts")
@@ -103,11 +78,8 @@ const handleChange = (e)=> {
     }else{
       localStorage.setItem("accounts", JSON.stringify(accounts));
     }
-    
-    // console.log(accounts);
-   
-  },[]);
 
+  },[]);
   const navigateLogin = (e)=>{
     e.preventDefault();
     navigate('/login')
@@ -153,7 +125,6 @@ const handleChange = (e)=> {
             Already have account? Login
             <button onClick={
               navigateLogin
-              // ()=>props.onFormSwitch('LoginForm')
             } className="btn btn-link signup_here" >Here</button> 
             </Form.Text>
         </div>
@@ -165,7 +136,6 @@ const handleChange = (e)=> {
       </div>
     </>
   );
-
 }
 
 export default SignupForm
